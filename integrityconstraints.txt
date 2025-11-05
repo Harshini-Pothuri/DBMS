@@ -1,0 +1,200 @@
+ways to specify primary key
+create table st
+(
+rollno integer primary key,
+name varchar2(20)
+);
+
+
+create table st
+(
+rollno integer,
+name varchar2(20), 
+primary key(rollno)
+);
+
+constraint constraint_name primary key(columnname)
+create table st
+(
+rollno integer,
+name varchar2(20),
+constraint st_pk primary key(rollno)
+);
+
+alter with constraints
+
+alter table st
+drop constraint st_pk;
+
+create table st
+(
+rollno integer,
+name varchar2(20)
+);
+
+alter table st
+add constraint st_pk primary key(rollno);
+
+desc st
+
+alter table st
+drop constraint st_pk;
+
+alter table st
+add constraint st_un unique(rollno);
+
+alter table st
+drop constraint st_un;
+
+alter table st
+modify rollno integer not null;
+
+desc st
+
+syntax
+alter table tablename
+modify columnname default 'value'
+
+alter table st
+modify name varchar2(20) default 'ravi';
+
+desc st
+
+alter table st
+add marks integer;
+
+syntax
+alter table tablename
+add constraint constraintname check(condition)
+
+alter table tablename
+drop constraint constraintname
+
+alter table st
+add constraint c_ch check(marks<101);
+
+alter table st
+drop constraint c_ch;
+
+drop table st;
+
+create table st
+(
+rollno integer primary key,
+name varchar2(20)
+);
+
+create table st1
+(
+rollno integer,
+fee integer
+);
+
+syntax
+alter table tablename
+add constraint constraintname foreign key(columnname) references parenttablename(columnname)
+
+alter table tablename
+drop constraint constraintname
+
+alter table st1
+add constraint fk_st1 foreign key(rollno) references st(rollno);
+
+alter table st1
+drop constraint fk_st1;
+
+queries
+find the name,age of all sailors
+select sname,age from sailors;
+
+alternates of above query
+select sailors.sname,sailors.age from sailors;
+
+select s.sname,s.age from sailors s;
+
+find all sailors whose rating is greater than 7
+select * from sailors s
+where s.rating>7;
+
+syntax
+select colname from tablename
+where condition
+
+comparison operators
+select * from sailors s
+where s.rating<7;
+
+select * from sailors s
+where s.rating!=7;
+
+select * from sailors s
+where s.rating<>7;
+
+select * from sailors s
+where s.rating=7;
+
+logical and operator
+find all sailors whose rating is greater than 7 and age is less than 20
+select * from sailors s
+where s.rating>7 and s.age<20;
+
+like operator
+syntax
+select colname from tablename
+where colname like pattern
+
+patterns
+_ indicates one character
+% indicates one or more characters
+query
+find the age of sailors whose name begins and ends with b and has atleast three characters
+select s.age from sailors s
+where s.sname like 'B_%b';
+
+find the age of sailors whose name begins and ends with b and has exactly three characters
+select s.age from sailors s
+where s.sname like 'B_b';
+
+examples schemas
+
+Suppliers(sid: integer, sname: string, address: string)
+Parts(pid: integer, pname: string, color: string)
+Catalog(sid: integer, pid: integer, cost: real)
+
+EMPLOYEE (EMPID, FName, LName,Address, Sex, Salary,DeptNo)
+DEPARTMENT (DeptNo, DName, HOD_EMPID)
+PROJECT (ProjNo, PName, DeptNo)
+WORKS_ON (EMPID, ProjNo, Hours)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,296 @@
+queries
+
+find the name,age of all sailors
+select sname,age from sailors;
+
+select sailors.sname,sailors.age from sailors;
+
+select s.sname,s.age from sailors s;
+
+find all sailors whose rating is greater than 7
+
+select * from sailors s
+where s.rating>7;
+
+syntax
+select colname from tablename
+where condition
+
+select * from sailors s
+where s.rating<7;
+
+select * from sailors s
+where s.rating!=7;
+
+select * from sailors s
+where s.rating<>7;
+
+select * from sailors s
+where s.rating=7;
+
+
+find all sailors whose rating is greater than 7 and age is less than 20
+select * from sailors s
+where s.rating>7 and s.age<20;
+
+like operator syntax
+select colname from tablename
+where colname like pattern
+
+_ indicates one character
+% indicates one or more characters
+find the age of sailors whose name begins and ends with b and has atleast three characters
+select s.age from sailors s
+where s.sname like 'B_%b';
+
+exactly three characters
+select s.age from sailors s
+where s.sname like 'B_b';
+
+
+ROLLNO NAME                           CITY
+---------- ------------------------------ --------------------
+     501 ravi				bangalore  
+     502 suma                           mumbai
+       503 uma                            chennai
+       504 leela                          raipur
+       505 mani                           jaipur
+
+Find all the details of students where city that have "ai" in any position
+SQL> select * from studs where city like '%ai%';
+
+    ROLLNO NAME                           CITY
+---------- ------------------------------ --------------------
+       502 suma                           mumbai
+       503 uma                            chennai
+       504 leela                          raipur
+       505 mani                           jaipur
+select * from studs where city not like '%ai%';
+ROLLNO NAME                           CITY
+---------- ------------------------------ --------------------
+     501 ravi				bangalore  
+
+Find all the details of students where city that ends with r
+
+SQL> select * from studs where city like '%r';
+    ROLLNO NAME                         CITY
+---------- ------------------- --------------------
+       504 leela                          raipur
+       505 mani                           jaipur
+Find all the details of students where city that starts with m
+
+SQL> select * from studs where city like 'm%';
+   ROLLNO NAME                           CITY
+--------- ------------------------------ --------------------
+      502 suma                           mumbai
+Find all the details of students where city that have "e" in third position
+SQL> select * from studs where city like '__e%';
+    ROLLNO NAME                           CITY
+---------- ------------------------------ --------------------
+       503 uma                            chennai
+Find all the details of students where city that start with c and ends with i
+SQL> select * from studs where city like 'c%i';
+
+    ROLLNO NAME                           CITY
+---------- ------------------------------ --------------------
+       503 uma                            chennai
+
+arithmetic operators
+select * from dual;
+
+select 3+2 from dual;
+select 3+2 as addition from dual;
+
+select 3+2 addition from dual;
+select 3-2 as subtract from dual;
+
+select 3*2 as multiply from dual;
+
+select 3/2 as division from dual;
+
+select 3%2 as division from dual;
+
+select mod(3,2) as modulus from dual;
+
+student
+rno	name	int	ext
+501	ravi	30	40
+502	suma	32	45	
+503	rani	35	50
+504	usha	40	55
+505     usha	50	60
+
+select distinct name from student;
+
+select name from student;
+
+
+select rno,name,int,ext,int+ext as total from student;
+
+logical operators
+
+select rno from student where name='rani' and int=35;
+
+select rno from student where name='rani' and int=40;
+
+select rno from student where name='rani' or int=35;
+
+select rno from student where name='rani' or int=40;
+
+select * from student where not int=40;
+
+comparison operators
+select rno,name from student where int<35;
+
+select rno,name from student where ext>40;
+
+select rno,name from student where int<>32;
+
+select * from student where int between 30 and 35;
+
+Find sailors who have a rating of 8 or more and are at least 25 years old
+
+SELECT sname
+FROM Sailors
+WHERE rating >= 8 AND age >= 25;
+
+Find boat names that are either red or green
+
+    SELECT bname
+    FROM Boats
+    WHERE color = 'red' OR color = 'green';
+
+find sailor names whose rating is not 7
+
+select sname from sailors where not rating=7;
+
+find Sailor names with ratings between 3 and 7
+
+SELECT sname
+FROM Sailors
+WHERE rating BETWEEN 3 AND 7;
+
+
+On Delete Cascade:
+create table t1
+ (
+ t1_id integer,
+ t1_desc varchar2(30),
+ primary key(t1_id));
+ 
+create table t2
+ (
+ t1_t2_id integer,
+ t2_id integer,
+ t2_desc varchar2(30),
+ primary key(t2_id),
+ foreign key(t1_t2_id) references t1(t1_id) on delete cascade
+ );
+
+create table t3
+ (
+ t2_t3_id integer,
+ t3_id integer,
+ t3_desc varchar2(30),
+ primary key(t3_id),
+ foreign key(t2_t3_id) references t2(t2_id) on delete cascade
+ );
+
+
+insert into t1 values(1,'t1one');
+insert into t2 values(1,1,'t2one');
+insert into t3 values(1,1,'t3one');
+select * from t1;
+select * from t2;
+select * from t3;
+
+delete from t1 cascade;
+
+select * from t1;
+select * from t2;
+select * from t3;
+
+insert into t1 values(1,'t1one');
+insert into t2 values(1,1,'t2one');
+insert into t3 values(1,1,'t3one');
+
+delete from t2 cascade;
+
+select * from t1;
+T1_ID T1_DESC
+---------- ------------------------------
+1 t1 one
+select * from t2;
+
+select * from t3;
+
+drop table t3;
+
+drop table t2;
+
+drop table t1;
+
+
+On Delete SetNull:
+create table t1
+ (
+ t1_id integer,
+ t1_desc varchar2(30),
+ primary key(t1_id)
+ );
+
+create table t2
+ (
+ t2_id integer,
+ t1_t2_id integer,
+ t2_desc varchar2(30),
+ primary key(t2_id),
+ foreign key(t1_t2_id) references t1(t1_id) on delete set NULL
+ );
+
+ create table t3
+ (
+ t3_id integer,
+ t2_t3_id integer,
+ t3_desc varchar2(30),
+ primary key(t3_id),
+ foreign key(t2_t3_id) references t2(t2_id) on delete set NULL
+ );
+
+insert into t1 values(1,'t1one');
+
+insert into t2 values(1,1,'t2one');
+
+insert into t3 values(1,1,'t3one');
+
+delete from t1 where t1_id = 1;
+
+select * from t1;
+
+select * from t2;
+
+T2_ID T1_T2_ID T2_DESC
+---------- ---------- ------------------------------
+1 		t1 one
+ select * from t3;
+T3_ID T2_T3_ID T3_DESC
+---------- ---------- ------------------------------
+1 1 t3 one
+
+delete from t2 where t2_id=2;
+
+select * from t2;
+
+select * from t3;
+
+
+
+
+
+
+
+
+
+
+
+
